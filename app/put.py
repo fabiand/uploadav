@@ -41,6 +41,7 @@ def run(server_class=HTTPServer, handler_class=PutHTTPRequestHandler):
     httpd.serve_forever()
 
 if __name__ == '__main__':
+    print("CWD", os.getcwd())
     # Intentionally not absolute
     assert os.path.exists("disk.img"), "disk.img does not exist. Attach/Mount it!"
     run()
