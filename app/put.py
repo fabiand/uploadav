@@ -5,8 +5,8 @@ import os
 
 def forceDisk(func):
     def wrapper(self):
+        print("New request")
         print(self.headers)
-        print(self.path)
         if(self.command not in ("GET", "PUT") or self.path != "/disk.img"):
             self.send_error(500, "Only GET and PUT to /disk.img permitted")
             self.end_headers()

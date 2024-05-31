@@ -66,7 +66,6 @@ items:
           volumeMounts:
           - mountPath: /etc/tls/private
             name: proxy-tls
-
         - name: app
           image: quay.io/fdeutsch/uploadav:latest
           volumeMounts:
