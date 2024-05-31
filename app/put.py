@@ -7,15 +7,15 @@ def forceDisk(func):
     def wrapper(self):
         print(self.headers)
         print(self.path)
-        if(self.command not in ("GET", "PUT") or self.path != "/disk.raw"):
-            self.send_error(500, "Only GET and PUT to /disk.raw permitted")
+        if(self.command not in ("GET", "PUT") or self.path != "/disk.img"):
+            self.send_error(500, "Only GET and PUT to /disk.img permitted")
             self.end_headers()
         else:
             return func(self)
     return wrapper
 
-# curl localhost:8000/disk.raw
-# curl localhost:8000/disk.raw --upload-file local.disk.raw
+# curl localhost:8000/disk.img
+# curl localhost:8000/disk.img --upload-file local.disk.img
 class PutHTTPRequestHandler(SimpleHTTPRequestHandler):
     @forceDisk
     def do_GET(self):
@@ -25,7 +25,7 @@ class PutHTTPRequestHandler(SimpleHTTPRequestHandler):
     def do_PUT(self):
         print(self.headers)
         print(self.path)
-        assert(self.path == "/disk.raw")
+        assert(self.path == "/disk.img")
         length = int(self.headers["Content-Length"])
         path = self.translate_path(self.path)
         with open(path, "wb") as dst:
@@ -41,5 +41,6 @@ def run(server_class=HTTPServer, handler_class=PutHTTPRequestHandler):
     httpd.serve_forever()
 
 if __name__ == '__main__':
-    assert(os.path.exists("./disk.raw"), "disk.raw does not exist. Attach/Mount it!")
+    # Intentionally not absolute
+    assert os.path.exists("disk.img"), "disk.img does not exist. Attach/Mount it!"
     run()
