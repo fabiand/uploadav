@@ -8,3 +8,15 @@
 
 Effect:
 HTTP based upload/download of PVC, authenticated against Kube.
+
+# Usage
+
+## GET
+
+    $ TOKEN=$(oc create token TBD)
+    $ curl --insecure -L -v -H"Authorization: Bearer $TOKEN" https://proxy-default.example.com/disk.raw
+
+## PUT
+
+    $ TOKEN=$(oc create token TBD)
+    $ curl --insecure -L -v -H"Authorization: Bearer $TOKEN" https://proxy-default.example.com/disk.raw --upload-file mydisk.raw
